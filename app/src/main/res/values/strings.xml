@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">Vloussy Add Message</string>
+
+    <string name="tab_text_1">عامة</string>
+    <string name="tab_text_2">صادرات</string>
+    <string name="tab_text_3">واردات</string>
+    <string name="tab_text_4">مسحوبة</string>
+    <string name="tab_text_5">غير مسحوبة</string>
+
+    <string name="invalid_input" translatable="false">Invalid Input</string>
+    <string name="fail_get_data">فشل بجلب البيانات</string>
+    <string name="success_add_post">تمت اضافة الرسالة بنجاح</string>
+    <string name="fail_add_post">فشل بإضافة الرسالة</string>
+
+</resources>
