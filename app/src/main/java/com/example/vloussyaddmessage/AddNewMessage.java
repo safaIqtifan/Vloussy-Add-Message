@@ -46,6 +46,8 @@ public class AddNewMessage extends AppCompatActivity {
     //    PartnersModel partnersModel;
     CoinsModel coinsModel;
     String partnersNameCoin;
+    String amount1Str = "";
+    String amount2Str = "";
     ArrayList<PartnersModel> partnerArrayList;
     ArrayList<String> namesList = new ArrayList<>();
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -131,7 +133,7 @@ public class AddNewMessage extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                String amount1Str = binding.amount1.getText().toString();
+                amount1Str = binding.amount1.getText().toString();
 //                String amount2Str = binding.amount2.getText().toString();
                 String priceStr = binding.price.getText().toString();
                 if (!amount1Str.isEmpty()) {
@@ -139,6 +141,33 @@ public class AddNewMessage extends AppCompatActivity {
                     double amount1Double = Double.parseDouble(binding.amount1.getText().toString());
 
                     binding.amount2.setText(String.valueOf(amount1Double * priceDouble));
+                }
+            }
+        });
+
+        binding.amount2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+//                String amount1Str = binding.amount1.getText().toString();
+                amount2Str = binding.amount2.getText().toString();
+                String priceStr = binding.price.getText().toString();
+                if (!amount2Str.isEmpty()) {
+                    double priceDouble = Double.parseDouble(priceStr);
+//                    double amount1Double = Double.parseDouble(binding.amount1.getText().toString());
+                    double amount2Double = Double.parseDouble(binding.amount2.getText().toString());
+
+                    binding.amount2.setText(String.valueOf(amount2Double / priceDouble));
                 }
             }
         });
