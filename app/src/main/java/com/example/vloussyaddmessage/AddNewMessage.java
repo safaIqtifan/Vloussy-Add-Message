@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vloussyaddmessage.Model.CoinsModel;
@@ -18,6 +19,7 @@ import com.example.vloussyaddmessage.Model.PartnersModel;
 import com.example.vloussyaddmessage.databinding.ActivityAddNewMessageBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +53,8 @@ public class AddNewMessage extends AppCompatActivity {
         binding = ActivityAddNewMessageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        EditText d = findViewById(R.id.amount1);
+        TextInputEditText dx = findViewById(R.id.amount1);
         fireStoreDB = FirebaseFirestore.getInstance();
         messageModel = new MessageModel();
         partnerArrayList = new ArrayList<>();
@@ -160,6 +164,8 @@ public class AddNewMessage extends AppCompatActivity {
         String sourceStr = binding.sourceTV.getText().toString();
         String amount1Str = binding.amount1.getText().toString();
         String amount2Str = binding.amount2.getText().toString();
+//        double amount1Dou = Double.parseDouble(amount1Str);
+//        double amount2Dou = Double.parseDouble(amount2Str);
         String priceStr = binding.price.getText().toString();
         String senderNameStr = binding.senderNameTV.getText().toString();
         String senderMobileNumberStr = binding.senderMobileNumber.getText().toString();
@@ -184,6 +190,14 @@ public class AddNewMessage extends AppCompatActivity {
         }
         if (amount2Str.isEmpty()) {
             binding.amount2.setError(this.getString(R.string.invalid_input));
+            hasError = true;
+        }
+        if (Double.parseDouble(amount1Str) == 0) {
+            binding.amount1.setError("يجب ان يكون الحقل أكبر من 0");
+            hasError = true;
+        }
+        if (Double.parseDouble(amount2Str) == 0) {
+            binding.amount2.setError("يجب ان يكون الحقل أكبر من 0");
             hasError = true;
         }
         if (priceStr.isEmpty()) {
