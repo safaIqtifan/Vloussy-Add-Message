@@ -64,8 +64,8 @@ public class AddNewMessage extends AppCompatActivity {
         partnerArrayList = new ArrayList<>();
         String[] namesList = new String[]{};
 
-//        binding.loadingLY.setVisibility(View.VISIBLE);
-//        getPartnerData();
+        binding.loadingLY.setVisibility(View.VISIBLE);
+        getPartnerData();
 //
 //        calendar = Calendar.getInstance();
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -179,8 +179,8 @@ public class AddNewMessage extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm a");
         String DateFormat = simpleDateFormat.format(calendar.getTime());
 
-        String dateStr = binding.dateTV.getText().toString();
-        String timeStr = binding.timeTV.getText().toString();
+//        String dateStr = binding.dateTV.getText().toString();
+//        String timeStr = binding.timeTV.getText().toString();
         String destinationStr = binding.destinationTV.getText().toString();
         String sourceStr = binding.sourceTV.getText().toString();
         String amount1Str = binding.amount1.getText().toString();
@@ -248,8 +248,15 @@ public class AddNewMessage extends AppCompatActivity {
         if (hasError)
             return;
 
-        messageModel.messageDate = dateStr;
-        messageModel.messagetime = timeStr;
+        calendar = Calendar.getInstance();
+        SimpleDateFormat msimpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
+        String date = msimpleDateFormat.format(calendar.getTime());
+
+        SimpleDateFormat simpletimeFormat = new SimpleDateFormat("h:mm a");
+        String time = simpletimeFormat.format(calendar.getTime());
+
+        messageModel.messageDate = date;
+        messageModel.messagetime = time;
         messageModel.destination = destinationStr;
         messageModel.source = sourceStr;
         messageModel.amount1 = amount1Str;
@@ -318,7 +325,7 @@ public class AddNewMessage extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog dialog = new DatePickerDialog(
-                getActivity(),
+                AddNewMessage.this,
                 android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 mDateSetListener,
                 year, month, day);
