@@ -3,13 +3,17 @@ package com.example.vloussyaddmessage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -44,7 +48,7 @@ public class AddNewMessage extends AppCompatActivity {
     String partnersNameCoin;
     ArrayList<PartnersModel> partnerArrayList;
     ArrayList<String> namesList = new ArrayList<>();
-
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +64,34 @@ public class AddNewMessage extends AppCompatActivity {
         partnerArrayList = new ArrayList<>();
         String[] namesList = new String[]{};
 
-        binding.loadingLY.setVisibility(View.VISIBLE);
-        getPartnerData();
+//        binding.loadingLY.setVisibility(View.VISIBLE);
+//        getPartnerData();
+//
+//        calendar = Calendar.getInstance();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
+//        String date = simpleDateFormat.format(calendar.getTime());
+//        binding.dateTV.setText(date);
+//
+//        SimpleDateFormat simpletimeFormat = new SimpleDateFormat("h:mm a");
+//        String time = simpletimeFormat.format(calendar.getTime());
+//        binding.timeTV.setText(time);
 
-        calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
-        String date = simpleDateFormat.format(calendar.getTime());
-        binding.dateTV.setText(date);
+        binding.birthDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        Log.d("TAG", "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
-        SimpleDateFormat simpletimeFormat = new SimpleDateFormat("h:mm a");
-        String time = simpletimeFormat.format(calendar.getTime());
-        binding.timeTV.setText(time);
+                        String date = year + "/" + month + "/" + day;
+                        binding.birthDate.setText(date);
+                    }
+                };
+                getDateOfBirth();
+            }
+        });
 
         binding.destinationTV.addTextChangedListener(new TextWatcher() {
             @Override
@@ -155,8 +176,8 @@ public class AddNewMessage extends AppCompatActivity {
 
     private void checkData() {
 
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm a");
-//        String time = simpleDateFormat.format(calendar.getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm a");
+        String DateFormat = simpleDateFormat.format(calendar.getTime());
 
         String dateStr = binding.dateTV.getText().toString();
         String timeStr = binding.timeTV.getText().toString();
@@ -287,6 +308,23 @@ public class AddNewMessage extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void getDateOfBirth() {
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                getActivity(),
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                mDateSetListener,
+                year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
     }
 
     public void getPartnerData() {
